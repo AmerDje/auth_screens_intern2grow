@@ -1,4 +1,3 @@
-import 'package:auth_screens_intern2grow/core/customs/extensions/navigation_extension.dart';
 import 'package:flutter/material.dart';
 
 class AuthenticationFooter extends StatelessWidget {
@@ -6,18 +5,18 @@ class AuthenticationFooter extends StatelessWidget {
     super.key,
     required this.message,
     required this.navName,
+    required this.onTap,
   });
   final String message;
   final String navName;
+  final void Function() onTap;
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Text(message),
         InkWell(
-          onTap: () {
-            context.go(const Scaffold());
-          },
+          onTap: onTap,
           child: Text(
             navName,
             style: const TextStyle(

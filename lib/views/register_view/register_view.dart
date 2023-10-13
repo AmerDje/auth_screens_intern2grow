@@ -1,26 +1,31 @@
+import 'package:auth_screens_intern2grow/core/utils/assets.dart';
+import 'package:auth_screens_intern2grow/core/utils/size.dart';
+import 'package:auth_screens_intern2grow/views/login_view/widgets/authentication_footer.dart';
+import 'package:auth_screens_intern2grow/views/login_view/widgets/authentication_header.dart';
+import 'package:flutter/material.dart';
 import 'package:auth_screens_intern2grow/core/customs/custom_button.dart';
 import 'package:auth_screens_intern2grow/core/customs/custom_text_field.dart';
-import 'package:auth_screens_intern2grow/core/utils/size.dart';
-import 'package:flutter/material.dart';
 
-class LoginViewForm extends StatefulWidget {
-  const LoginViewForm({super.key});
+class RegisterViewForm extends StatefulWidget {
+  const RegisterViewForm({super.key});
 
   @override
-  State<LoginViewForm> createState() => _LoginViewFormState();
+  State<RegisterViewForm> createState() => _RegisterViewFormState();
 }
 
-class _LoginViewFormState extends State<LoginViewForm> {
+class _RegisterViewFormState extends State<RegisterViewForm> {
   bool isRemembered = false;
   bool isTapped = false;
   bool isHidden = true;
   AutovalidateMode? autovalidateMode = AutovalidateMode.disabled;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController usernameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   String? password;
   @override
   void dispose() {
     usernameController.dispose();
+    emailController.dispose();
     super.dispose();
   }
 
@@ -58,6 +63,40 @@ class _LoginViewFormState extends State<LoginViewForm> {
                 ? IconButton(
                     onPressed: () {
                       usernameController.text = '';
+                      setState(() {});
+                    },
+                    icon: const Icon(Icons.cancel_outlined))
+                : const Icon(Icons.person_outline),
+          ),
+          SizedBox(
+            height: SizeConfig.blockH * 5,
+          ),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 6.0),
+            child: Text("email"),
+          ),
+          CustomTextField(
+            controller: emailController,
+            onTap: () {
+              isTapped = true;
+              setState(() {});
+            },
+            text: "example@gmail.com",
+            validator: (value) {
+              if (value?.isEmpty ?? true) {
+                return "Field can't empty";
+              }
+              return null;
+            },
+            onTapOutside: (event) {
+              FocusScope.of(context).unfocus();
+              isTapped = false;
+              setState(() {});
+            },
+            suffix: isTapped == true
+                ? IconButton(
+                    onPressed: () {
+                      emailController.text = '';
                       setState(() {});
                     },
                     icon: const Icon(Icons.cancel_outlined))
@@ -129,15 +168,14 @@ class _LoginViewFormState extends State<LoginViewForm> {
               const Spacer(),
               InkWell(
                 onTap: () {
-                  debugPrint("Forget Password Tapped");
+                  debugPrint("Have a Problem Tapped");
                 },
-                child: const Text("Forget Password",
+                child: const Text("Have a Problem",
                     style: TextStyle(
-                      decorationColor: Colors.blue,
-                      decorationThickness: 2,
-                      decoration: TextDecoration.underline,
-                      fontWeight: FontWeight.bold,
-                    )),
+                        decorationColor: Colors.blue,
+                        decorationThickness: 2,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline)),
               ),
             ],
           ),
@@ -149,14 +187,54 @@ class _LoginViewFormState extends State<LoginViewForm> {
                 if (formKey.currentState!.validate()) {
                   formKey.currentState!.save();
                   debugPrint(usernameController.text);
+                  debugPrint(emailController.text);
                 } else {
                   autovalidateMode = AutovalidateMode.always;
                   setState(() {});
                 }
               },
-              text: "Login"),
+              text: "Register"),
         ],
       ),
     );
+  }
+}
+
+class RegisterView extends StatelessWidget {
+  const RegisterView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+        child: Scaffold(
+      body: SingleChildScrollView(
+        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+          const AuthenticationHead(
+            imageProfileUrl: Assets.authScreenHeader,
+            viewTitle: "Create new account",
+          ),
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 22.0, vertical: 22.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const RegisterViewForm(),
+                SizedBox(
+                  height: SizeConfig.blockH * 5,
+                ),
+                AuthenticationFooter(
+                  message: "Already have an account  ",
+                  navName: "Login",
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          )
+        ]),
+      ),
+    ));
   }
 }

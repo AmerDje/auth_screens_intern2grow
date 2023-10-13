@@ -1,8 +1,10 @@
+import 'package:auth_screens_intern2grow/core/customs/extensions/navigation_extension.dart';
 import 'package:auth_screens_intern2grow/core/utils/assets.dart';
 import 'package:auth_screens_intern2grow/core/utils/size.dart';
 import 'package:auth_screens_intern2grow/views/login_view/widgets/authentication_footer.dart';
 import 'package:auth_screens_intern2grow/views/login_view/widgets/authentication_header.dart';
 import 'package:auth_screens_intern2grow/views/login_view/widgets/login_view_form.dart';
+import 'package:auth_screens_intern2grow/views/register_view/register_view.dart';
 import 'package:flutter/material.dart';
 
 class LoginViewBody extends StatelessWidget {
@@ -27,9 +29,12 @@ class LoginViewBody extends StatelessWidget {
               SizedBox(
                 height: SizeConfig.blockH * 5,
               ),
-              const AuthenticationFooter(
+              AuthenticationFooter(
                 message: "Don't have an account  ",
                 navName: "Register",
+                onTap: () {
+                  context.go(const RegisterView());
+                },
               ),
             ],
           ),
