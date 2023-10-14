@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
   final int maxLines;
-  final String text;
+  final String? text;
   final void Function(String?)? onSaved;
   final bool obscureText;
   final String? initialValue;
@@ -17,7 +17,7 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController? controller;
   const CustomTextField(
       {super.key,
-      required this.text,
+      this.text,
       this.maxLines = 1,
       this.onSaved,
       this.obscureText = false,

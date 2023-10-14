@@ -17,7 +17,7 @@ class LoginViewBody extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
         const AuthenticationHead(
-          imageProfileUrl: Assets.authScreenHeader,
+          imageProfileUrl: Assets.intern2GrowLogo,
           viewTitle: "Log in to your account",
         ),
         Padding(

@@ -19,14 +19,14 @@ class AuthenticationHead extends StatelessWidget {
             clipBehavior: Clip.none,
             children: [
               Image.asset(
-                imageProfileUrl,
+                Assets.authScreenHeader,
                 fit: BoxFit.fill,
               ),
               Positioned(
                 right: SizeConfig.screenW / 2 - 58,
                 top: SizeConfig.screenH / 4 - 58,
                 child: Image.asset(
-                  Assets.intern2GrowLogo,
+                  imageProfileUrl,
                   height: 116,
                   width: 116,
                 ),

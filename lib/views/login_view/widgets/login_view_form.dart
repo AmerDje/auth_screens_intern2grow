@@ -1,7 +1,9 @@
 import 'package:auth_screens_intern2grow/core/customs/custom_button.dart';
 import 'package:auth_screens_intern2grow/core/customs/custom_text_field.dart';
+import 'package:auth_screens_intern2grow/core/extensions/navigation_extension.dart';
 import 'package:auth_screens_intern2grow/core/utils/size.dart';
 import 'package:auth_screens_intern2grow/views/common/remember_me_line.dart';
+import 'package:auth_screens_intern2grow/views/profile_view/profile_view.dart';
 import 'package:flutter/material.dart';
 
 class LoginViewForm extends StatefulWidget {
@@ -121,6 +123,7 @@ class _LoginViewFormState extends State<LoginViewForm> {
                 if (formKey.currentState!.validate()) {
                   formKey.currentState!.save();
                   debugPrint(usernameController.text);
+                  context.go(const ProfileView());
                 } else {
                   autovalidateMode = AutovalidateMode.always;
                   setState(() {});
