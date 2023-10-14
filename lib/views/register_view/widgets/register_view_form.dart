@@ -4,24 +4,29 @@ import 'package:auth_screens_intern2grow/core/utils/size.dart';
 import 'package:auth_screens_intern2grow/views/common/remember_me_line.dart';
 import 'package:flutter/material.dart';
 
-class LoginViewForm extends StatefulWidget {
-  const LoginViewForm({super.key});
+class RegisterViewForm extends StatefulWidget {
+  const RegisterViewForm({super.key});
 
   @override
-  State<LoginViewForm> createState() => _LoginViewFormState();
+  State<RegisterViewForm> createState() => _RegisterViewFormState();
 }
 
-class _LoginViewFormState extends State<LoginViewForm> {
+class _RegisterViewFormState extends State<RegisterViewForm> {
   bool isRemembered = false;
   bool isTapped = false;
   bool isHidden = true;
   AutovalidateMode? autovalidateMode = AutovalidateMode.disabled;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController usernameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   String? password;
+  final RegExp emailValid = RegExp(
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+
   @override
   void dispose() {
     usernameController.dispose();
+    emailController.dispose();
     super.dispose();
   }
 
@@ -59,6 +64,42 @@ class _LoginViewFormState extends State<LoginViewForm> {
                 ? IconButton(
                     onPressed: () {
                       usernameController.text = '';
+                      setState(() {});
+                    },
+                    icon: const Icon(Icons.cancel_outlined))
+                : const Icon(Icons.person_outline),
+          ),
+          SizedBox(
+            height: SizeConfig.blockH * 5,
+          ),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 6.0),
+            child: Text("email"),
+          ),
+          CustomTextField(
+            controller: emailController,
+            onTap: () {
+              isTapped = true;
+              setState(() {});
+            },
+            text: "example@gmail.com",
+            validator: (value) {
+              if (value?.isEmpty ?? true) {
+                return "Field can't empty";
+              } else if (!emailValid.hasMatch(value!)) {
+                return "Please type a valid name";
+              }
+              return null;
+            },
+            onTapOutside: (event) {
+              FocusScope.of(context).unfocus();
+              isTapped = false;
+              setState(() {});
+            },
+            suffix: isTapped == true
+                ? IconButton(
+                    onPressed: () {
+                      emailController.text = '';
                       setState(() {});
                     },
                     icon: const Icon(Icons.cancel_outlined))
@@ -111,7 +152,7 @@ class _LoginViewFormState extends State<LoginViewForm> {
               isRemembered != isRemembered;
               setState(() {});
             },
-            text: "Forget password ?",
+            text: "Have a problem ?",
           ),
           SizedBox(
             height: SizeConfig.blockH * 5,
@@ -121,12 +162,13 @@ class _LoginViewFormState extends State<LoginViewForm> {
                 if (formKey.currentState!.validate()) {
                   formKey.currentState!.save();
                   debugPrint(usernameController.text);
+                  debugPrint(emailController.text);
                 } else {
                   autovalidateMode = AutovalidateMode.always;
                   setState(() {});
                 }
               },
-              text: "Login"),
+              text: "Register"),
         ],
       ),
     );

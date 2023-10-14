@@ -1,14 +1,12 @@
-import 'package:auth_screens_intern2grow/core/extensions/navigation_extension.dart';
 import 'package:auth_screens_intern2grow/core/utils/assets.dart';
 import 'package:auth_screens_intern2grow/core/utils/size.dart';
 import 'package:auth_screens_intern2grow/views/common/authentication_footer.dart';
 import 'package:auth_screens_intern2grow/views/common/authentication_header.dart';
-import 'package:auth_screens_intern2grow/views/login_view/widgets/login_view_form.dart';
-import 'package:auth_screens_intern2grow/views/register_view/register_view.dart';
+import 'package:auth_screens_intern2grow/views/register_view/widgets/register_view_form.dart';
 import 'package:flutter/material.dart';
 
-class LoginViewBody extends StatelessWidget {
-  const LoginViewBody({
+class RegisterViewBody extends StatelessWidget {
+  const RegisterViewBody({
     super.key,
   });
 
@@ -18,22 +16,22 @@ class LoginViewBody extends StatelessWidget {
       child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
         const AuthenticationHead(
           imageProfileUrl: Assets.authScreenHeader,
-          viewTitle: "Log in to your account",
+          viewTitle: "Create new account",
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 22.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const LoginViewForm(),
+              const RegisterViewForm(),
               SizedBox(
                 height: SizeConfig.blockH * 5,
               ),
               AuthenticationFooter(
-                message: "Don't have an account  ",
-                navName: "Register",
+                message: "Already have an account  ",
+                navName: "Login",
                 onTap: () {
-                  context.go(const RegisterView());
+                  Navigator.pop(context);
                 },
               ),
             ],
